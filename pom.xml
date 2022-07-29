@@ -9,9 +9,10 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>authorizer</module>
-        <module>entity</module>
-        <module>common</module>
+        <module>akisora-authorizer</module>
+        <module>akisora-entity</module>
+        <module>akisora-common</module>
+        <module>akisora-gateway</module>
     </modules>
 
     <properties>
