@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.Map;
 
-/**
- * 自定义Oauth2获取令牌接口
- * Created by macro on 2020/7/17.
- */
 @RestController
 @RequestMapping("/oauth")
 @RequiredArgsConstructor
@@ -25,10 +21,7 @@ public class AuthController {
 
     private final TokenEndpoint tokenEndpoint;
 
-    /**
-     * Oauth2登录认证
-     */
-    @PostMapping(value = "/token")
+    @PostMapping( "/token")
     public Res<Oauth2Token> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
         assert oAuth2AccessToken != null;

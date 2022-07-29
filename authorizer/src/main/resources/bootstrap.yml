@@ -21,8 +21,3 @@ spring:
           - data-id: port.yml
             group: AKISORA_GROUP
             refresh: true
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
