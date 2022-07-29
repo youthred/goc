@@ -1,4 +1,4 @@
-package io.github.youthred.akisora.entity;
+package io.github.youthred.akisora.pojo.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

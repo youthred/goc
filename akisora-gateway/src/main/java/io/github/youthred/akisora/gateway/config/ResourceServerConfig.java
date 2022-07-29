@@ -25,7 +25,7 @@ public class ResourceServerConfig {
 
     private final AuthorizationManager authorizationManager;
     private final IgnoreUrlsProperties ignoreUrlsProperties;
-    private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+    private final RestAccessDeniedHandler restAccessDeniedHandler;
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final IgnoreUrlsRemoveJwtFilter ignoreUrlsRemoveJwtFilter;
 
@@ -41,7 +41,7 @@ public class ResourceServerConfig {
                 .pathMatchers(ArrayUtil.toArray(ignoreUrlsProperties.getUrls(), String.class)).permitAll()  // 白名单配置
                 .anyExchange().access(authorizationManager) // 鉴权管理器配置
                 .and().exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler)    // 处理未授权
+                .accessDeniedHandler(restAccessDeniedHandler)    // 处理未授权
                 .authenticationEntryPoint(restAuthenticationEntryPoint) // 处理未认证
                 .and().csrf().disable();
         return http.build();
@@ -56,5 +56,4 @@ public class ResourceServerConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
     }
-
 }

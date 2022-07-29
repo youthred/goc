@@ -1,6 +1,6 @@
 package io.github.youthred.akisora.authorizer.config;
 
-import io.github.youthred.akisora.entity.User;
+import io.github.youthred.akisora.pojo.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;

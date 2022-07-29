@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
  * @author https://github.com/youthred
  */
 @Component
-public class RestfulAccessDeniedHandler implements ServerAccessDeniedHandler {
+public class RestAccessDeniedHandler implements ServerAccessDeniedHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException denied) {

@@ -3,7 +3,7 @@ package io.github.youthred.akisora.authorizer.service;
 import cn.hutool.core.collection.CollUtil;
 import io.github.youthred.akisora.authorizer.config.SecurityUser;
 import io.github.youthred.akisora.common.constant.MessageConstant;
-import io.github.youthred.akisora.entity.User;
+import io.github.youthred.akisora.pojo.entity.User;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
