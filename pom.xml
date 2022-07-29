@@ -7,7 +7,7 @@
     <groupId>io.github.youthred</groupId>
     <artifactId>akisora</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <modules>
         <module>authorizer</module>
     </modules>
@@ -55,9 +55,18 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- spring cloud 2020以后的版本默认不优先读取bootstrap.yml https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#config-first-bootstrap -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
