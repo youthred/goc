@@ -9,6 +9,7 @@ import org.springframework.security.web.server.authorization.AuthorizationContex
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,8 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {
+        URI uri = authorizationContext.getExchange().getRequest().getURI();
+        // todo 真实数据库环境测试
         List<String> authorities = Arrays.asList("TEST");
         authorities = authorities.stream().map(i -> AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
         // 认证通过且角色匹配的用户可访问当前路径
