@@ -38,6 +38,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        // 本客户端 "goc-app" 仅允许密码登录
         clients.inMemory()
                 .withClient("goc-app")
                 .secret(passwordEncoder.encode("goc"))
