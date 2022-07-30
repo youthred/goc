@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class Oauth2Token {
+
     /**
      * 访问令牌
      */

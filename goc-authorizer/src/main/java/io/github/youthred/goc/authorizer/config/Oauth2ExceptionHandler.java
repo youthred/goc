@@ -11,7 +11,7 @@ public class Oauth2ExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = OAuth2Exception.class)
-    public Res handleOauth2(OAuth2Exception e) {
+    public Res<?> handleOauth2(OAuth2Exception e) {
         return Res.failed(e.getMessage());
     }
 }

@@ -1,6 +1,11 @@
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  redis:
+    database: ${redis-database}
+    port: ${redis-port}
+    host: ${redis-host}
+    password: ${redis-password}
 management:
   endpoints:
     web:

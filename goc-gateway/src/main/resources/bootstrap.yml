@@ -15,10 +15,7 @@ spring:
         namespace: goc
         file-extension: yml
         extension-configs:
-          - data-id: ip.yml
-            group: GOC_GROUP
-            refresh: true
-          - data-id: port.yml
+          - data-id: common.yml
             group: GOC_GROUP
             refresh: true
           - data-id: gateway.yml
