@@ -1,6 +1,6 @@
-# Akisora
+# GOC
 
-> Spring Cloud Gateway + Nacos + OAuth2
+> Spring Cloud Gateway + OAuth2 + Nacos
 
 - [x] Authorizer
 - [x] Gateway + Authenticator

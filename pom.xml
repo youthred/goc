@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.youthred</groupId>
-    <artifactId>akisora</artifactId>
+    <artifactId>goc</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>akisora-authorizer</module>
-        <module>akisora-pojo</module>
-        <module>akisora-common</module>
-        <module>akisora-gateway</module>
-        <module>akisora-test-api</module>
+        <module>goc-authorizer</module>
+        <module>goc-pojo</module>
+        <module>goc-common</module>
+        <module>goc-gateway</module>
+        <module>goc-test-api</module>
     </modules>
 
     <properties>

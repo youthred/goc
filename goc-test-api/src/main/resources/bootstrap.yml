@@ -1,0 +1,28 @@
+server:
+  port: ${port-test-api}
+spring:
+  application:
+    name: test-api
+  cloud:
+    nacos:
+#      username: nacos
+#      password: nacos
+      discovery:
+        server-addr: ${ip-nacos:localhost}:${port-nacos:8848}
+        namespace: goc
+      config:
+        server-addr: ${ip-nacos:localhost}:${port-nacos:8848}
+        namespace: goc
+        file-extension: yml
+        extension-configs:
+          - data-id: ip.yml
+            group: GOC_GROUP
+            refresh: true
+          - data-id: port.yml
+            group: GOC_GROUP
+            refresh: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
