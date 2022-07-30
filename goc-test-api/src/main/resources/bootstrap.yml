@@ -18,6 +18,11 @@ spring:
           - data-id: common.yml
             group: GOC_GROUP
             refresh: true
+  redis:
+    database: ${redis-database}
+    port: ${redis-port}
+    host: ${redis-host}
+    password: ${redis-password}
 management:
   endpoints:
     web:
