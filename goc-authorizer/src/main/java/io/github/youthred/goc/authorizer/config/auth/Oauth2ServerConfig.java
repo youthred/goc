@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -36,6 +37,12 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenEnhancer jwtTokenEnhancer;
 
+    /**
+     * 客户端配置
+     *
+     * @param clients ClientDetailsServiceConfigurer
+     * @throws Exception e
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // 本客户端 "goc-app" 仅允许密码登录
@@ -48,6 +55,12 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .refreshTokenValiditySeconds(86400);
     }
 
+    /**
+     * 令牌访问端点配置
+     *
+     * @param endpoints AuthorizationServerEndpointsConfigurer
+     * @throws Exception e
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
@@ -58,12 +71,33 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService) // 配置加载用户信息的服务
                 .accessTokenConverter(accessTokenConverter())
-                .tokenEnhancer(enhancerChain);
+                .tokenEnhancer(enhancerChain)
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST);
+
+        /*
+            spring Security框架默认的访问端点有如下6个：
+            /oauth/authorize：获取授权码的端点
+            /oauth/token：获取令牌端点。
+            /oauth/confifirm_access：用户确认授权提交端点。
+            /oauth/error：授权服务错误信息端点。
+            /oauth/check_token：用于资源服务访问的令牌解析端点。
+            /oauth/token_key：提供公有密匙的端点(JWT令牌)。
+            改变这些默认的端点的url endpoints.pathMapping("/oauth/token", "/customAuthPath");
+         */
     }
 
+    /**
+     * 令牌端点安全约束
+     *
+     * @param security AuthorizationServerSecurityConfigurer
+     * @throws Exception e
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients();
+        security
+                .tokenKeyAccess("permitAll()")  // 开启 /oauth/token_key 访问权限
+                .checkTokenAccess("permitAll()")    // 开启 /oauth/check_token 访问权限
+                .allowFormAuthenticationForClients();   // 支持 client_id 和 client_secret 做登录认证
     }
 
     @Bean

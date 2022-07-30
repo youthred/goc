@@ -17,4 +17,9 @@ public class TestController {
     public Res<?> currentUser() {
         return Res.success(LoginUserHolder.getCurrentUser());
     }
+
+    @GetMapping("/a")
+    public Res<?> a() {
+        return Res.success("a");
+    }
 }

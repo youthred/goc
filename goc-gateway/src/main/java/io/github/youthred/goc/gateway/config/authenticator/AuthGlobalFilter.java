@@ -4,9 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.nimbusds.jose.JWSObject;
 import io.github.youthred.goc.common.constant.AuthConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -25,7 +27,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String token = exchange.getRequest().getHeaders().getFirst("Authorization");
+        String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (StrUtil.isEmpty(token)) {
             return chain.filter(exchange);
         }
@@ -35,10 +37,10 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
             log.info("AuthGlobalFilter.filter() user:{}", userStr);
-            ServerHttpRequest request = exchange.getRequest().mutate().header("user", userStr).build();
+            ServerHttpRequest request = exchange.getRequest().mutate().header(AuthConstant.HEADER_USER, userStr).build();
             exchange = exchange.mutate().request(request).build();
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error("{}", ExceptionUtils.getStackTrace(e));
         }
         return chain.filter(exchange);
     }
