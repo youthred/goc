@@ -1,4 +1,4 @@
-# GOC
+# GOC GatewayOauth2Cloud
 
 > Spring Cloud Gateway + OAuth2 + Nacos
 
