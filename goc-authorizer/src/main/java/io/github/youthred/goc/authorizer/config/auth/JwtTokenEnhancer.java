@@ -1,4 +1,4 @@
-package io.github.youthred.goc.authorizer.config;
+package io.github.youthred.goc.authorizer.config.auth;
 
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

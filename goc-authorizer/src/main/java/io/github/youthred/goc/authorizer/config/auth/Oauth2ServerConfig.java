@@ -1,4 +1,4 @@
-package io.github.youthred.goc.authorizer.config;
+package io.github.youthred.goc.authorizer.config.auth;
 
 import io.github.youthred.goc.authorizer.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;

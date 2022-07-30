@@ -2,6 +2,7 @@ package io.github.youthred.goc.gateway.config.authenticator;
 
 import cn.hutool.core.util.StrUtil;
 import com.nimbusds.jose.JWSObject;
+import io.github.youthred.goc.common.constant.AuthConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -30,7 +31,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
         try {
             // 从token中解析用户信息并设置到Header中去
-            String realToken = token.replace("Bearer ", "");
+            String realToken = token.replace(AuthConstant.TOKEN_HEAD + " ", "");
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
             log.info("AuthGlobalFilter.filter() user:{}", userStr);

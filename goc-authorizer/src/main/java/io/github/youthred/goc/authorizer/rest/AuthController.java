@@ -1,6 +1,5 @@
 package io.github.youthred.goc.authorizer.rest;
 
-import io.github.youthred.goc.authorizer.config.Oauth2Token;
 import io.github.youthred.goc.common.res.Res;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -22,14 +21,8 @@ public class AuthController {
     private final TokenEndpoint tokenEndpoint;
 
     @PostMapping("/token")
-    public Res<Oauth2Token> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    public Res<?> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
-        assert oAuth2AccessToken != null;
-        Oauth2Token oauth2TokenDto = Oauth2Token.builder()
-                .token(oAuth2AccessToken.getValue())
-                .refreshToken(oAuth2AccessToken.getRefreshToken().getValue())
-                .expiresIn(oAuth2AccessToken.getExpiresIn())
-                .tokenHead("Bearer ").build();
-        return Res.success(oauth2TokenDto);
+        return Res.success(oAuth2AccessToken);
     }
 }

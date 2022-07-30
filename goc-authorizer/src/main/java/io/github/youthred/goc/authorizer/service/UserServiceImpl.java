@@ -1,7 +1,7 @@
 package io.github.youthred.goc.authorizer.service;
 
 import cn.hutool.core.collection.CollUtil;
-import io.github.youthred.goc.authorizer.config.SecurityUser;
+import io.github.youthred.goc.authorizer.config.auth.SecurityUser;
 import io.github.youthred.goc.common.constant.MessageConstant;
 import io.github.youthred.goc.pojo.entity.User;
 import org.springframework.security.authentication.AccountExpiredException;

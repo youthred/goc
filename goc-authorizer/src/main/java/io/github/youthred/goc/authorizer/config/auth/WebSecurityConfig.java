@@ -1,4 +1,4 @@
-package io.github.youthred.goc.authorizer.config;
+package io.github.youthred.goc.authorizer.config.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
