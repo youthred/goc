@@ -1,4 +1,4 @@
-package io.github.youthred.goc.gateway.config;
+package io.github.youthred.goc.gateway.config.authenticator;
 
 import io.github.youthred.goc.common.constant.AuthConstant;
 import org.springframework.security.authorization.AuthorizationDecision;

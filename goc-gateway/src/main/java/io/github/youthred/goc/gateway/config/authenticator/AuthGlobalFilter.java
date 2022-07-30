@@ -1,4 +1,4 @@
-package io.github.youthred.goc.gateway.config;
+package io.github.youthred.goc.gateway.config.authenticator;
 
 import cn.hutool.core.util.StrUtil;
 import com.nimbusds.jose.JWSObject;

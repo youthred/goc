@@ -1,4 +1,4 @@
-package io.github.youthred.goc.gateway.config;
+package io.github.youthred.goc.gateway.config.authenticator;
 
 import cn.hutool.json.JSONUtil;
 import io.github.youthred.goc.common.res.Res;
