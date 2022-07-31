@@ -1,4 +1,4 @@
-package io.github.youthred.goc.gateway.mapper;
+package io.github.youthred.goc.authorizer.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.github.youthred.goc.pojo.entity.GocAuthRole;
