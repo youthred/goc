@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserDetailsService {
     public UserServiceImpl(PasswordEncoder passwordEncoder) {
         users = new ArrayList<>(1);
         users.add(
-                new User().setId(123L).setUsername("admin").setPassword(passwordEncoder.encode("123456")).setStatus(1).setRoles(Collections.singletonList("ADMIN"))
+                new User().setId(123L).setUsername("admin").setPassword(passwordEncoder.encode("123456")).setEnabled(true).setRoles(Collections.singletonList("ADMIN"))
         );
     }
 

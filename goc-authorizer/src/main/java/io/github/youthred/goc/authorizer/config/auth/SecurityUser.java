@@ -16,6 +16,8 @@ import java.util.Collection;
 @NoArgsConstructor
 public class SecurityUser implements UserDetails {
 
+    private static final long serialVersionUID = -4175621569199955336L;
+
     /**
      * ID
      */
@@ -41,7 +43,7 @@ public class SecurityUser implements UserDetails {
         this.setId(user.getId());
         this.setUsername(user.getUsername());
         this.setPassword(user.getPassword());
-        this.setEnabled(user.getStatus() == 1);
+        this.setEnabled(user.getEnabled());
         if (user.getRoles() != null) {
             authorities = new ArrayList<>();
             user.getRoles().forEach(item -> authorities.add(new SimpleGrantedAuthority(item)));
