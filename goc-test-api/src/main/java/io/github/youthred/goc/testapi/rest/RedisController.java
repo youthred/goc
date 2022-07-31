@@ -24,8 +24,10 @@ public class RedisController {
     public void save() {
         Map<String, List<String>> resourceRolesMap;
         resourceRolesMap = new TreeMap<>();
-        resourceRolesMap.put(HttpMethod.GET.name() + RedisConstant.GOC_RESOURCE_ROLES_MAP_KEY_METHOD_URI_DELIMITER + "/test-api/hello", CollUtil.toList("ADMIN"));
-        resourceRolesMap.put(HttpMethod.GET.name() + RedisConstant.GOC_RESOURCE_ROLES_MAP_KEY_METHOD_URI_DELIMITER + "/test-api/user/currentUser", CollUtil.toList("ADMIN", "TEST"));
-        redisTemplate.opsForHash().putAll(RedisConstant.GOC_RESOURCE_ROLES_MAP, resourceRolesMap);
+        resourceRolesMap.put("/test-api/hello", CollUtil.toList("ADMIN"));
+        resourceRolesMap.put("/test-api/user/currentUser", CollUtil.toList("ADMIN", "TEST"));
+        resourceRolesMap.put("/role/*", CollUtil.toList("ADMIN"));
+        redisTemplate.opsForHash().putAll(RedisConstant.GOC_RESOURCE_ROLES_MAP + ":" + HttpMethod.GET.name(), resourceRolesMap);
+        redisTemplate.opsForHash().putAll(RedisConstant.GOC_RESOURCE_ROLES_MAP + ":" + HttpMethod.POST.name(), resourceRolesMap);
     }
 }

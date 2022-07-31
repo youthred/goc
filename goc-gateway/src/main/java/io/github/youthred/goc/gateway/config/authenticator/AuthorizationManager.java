@@ -3,6 +3,7 @@ package io.github.youthred.goc.gateway.config.authenticator;
 import cn.hutool.core.convert.Convert;
 import io.github.youthred.goc.common.constant.AuthConstant;
 import io.github.youthred.goc.common.constant.RedisConstant;
+import io.github.youthred.goc.gateway.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -12,10 +13,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +31,8 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
+
+    private static final PathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -40,9 +47,15 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
          */
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
         URI uri = request.getURI();
-        Object resourceRolesObj = redisTemplate.opsForHash().get(RedisConstant.GOC_RESOURCE_ROLES_MAP, request.getMethodValue() + RedisConstant.GOC_RESOURCE_ROLES_MAP_KEY_METHOD_URI_DELIMITER + uri.getPath());
-        List<String> authorities = Convert.toList(String.class, resourceRolesObj);
-        authorities = authorities.stream().map(i -> AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
+        List<String> authorities = new ArrayList<>();
+        String key = RedisUtil.keyChain(RedisConstant.GOC_RESOURCE_ROLES_MAP, request.getMethodValue());
+        Map<Object, Object> entries = redisTemplate.opsForHash().entries(key);
+        for (Map.Entry<Object, Object> pathRole : entries.entrySet()) {
+            if (ANT_PATH_MATCHER.match(pathRole.getKey().toString(), uri.getPath())) {
+                List<String> roles = Convert.toList(String.class, pathRole.getValue());
+                authorities = roles.stream().map(i -> AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
+            }
+        }
         // 认证通过且角色匹配的用户可访问当前路径
         return mono
                 .filter(Authentication::isAuthenticated)

@@ -29,6 +29,12 @@
         <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
+        <caffeine.version>2.8.8</caffeine.version>
+        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
+        <dynamic-datasource-spring-boot-starter.version>3.5.1</dynamic-datasource-spring-boot-starter.version>
+        <p6spy.version>3.9.1</p6spy.version>
+        <druid-spring-boot-starter.version>1.2.11</druid-spring-boot-starter.version>
+        <mysql-driver.version>8.0.27</mysql-driver.version>
     </properties>
 
     <dependencyManagement>
@@ -53,6 +59,37 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-driver.version}</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
