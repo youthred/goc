@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.Map;
 
+/**
+ * 自定义登录接口
+ *
+ * @author https://github.com/youthred
+ */
 @RestController
 @RequestMapping("/oauth")
 @RequiredArgsConstructor
