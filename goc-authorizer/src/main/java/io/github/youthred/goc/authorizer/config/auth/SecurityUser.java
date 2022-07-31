@@ -1,6 +1,6 @@
 package io.github.youthred.goc.authorizer.config.auth;
 
-import io.github.youthred.goc.pojo.entity.User;
+import io.github.youthred.goc.pojo.vo.GocAuthUserVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -39,14 +39,14 @@ public class SecurityUser implements UserDetails {
      */
     private Collection<SimpleGrantedAuthority> authorities;
 
-    public SecurityUser(User user) {
-        this.setId(user.getId());
-        this.setUsername(user.getUsername());
-        this.setPassword(user.getPassword());
-        this.setEnabled(user.getEnabled());
-        if (user.getRoles() != null) {
+    public SecurityUser(GocAuthUserVO gocAuthUserVO) {
+        this.setId(gocAuthUserVO.getId());
+        this.setUsername(gocAuthUserVO.getUsername());
+        this.setPassword(gocAuthUserVO.getPassword());
+        this.setEnabled(gocAuthUserVO.getEnabled());
+        if (gocAuthUserVO.getRoles() != null) {
             authorities = new ArrayList<>();
-            user.getRoles().forEach(item -> authorities.add(new SimpleGrantedAuthority(item)));
+            gocAuthUserVO.getRoles().forEach(item -> authorities.add(new SimpleGrantedAuthority(item)));
         }
     }
 

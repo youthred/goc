@@ -3,7 +3,7 @@ package io.github.youthred.goc.testapi.service;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.json.JSONObject;
 import io.github.youthred.goc.common.constant.AuthConstant;
-import io.github.youthred.goc.pojo.entity.User;
+import io.github.youthred.goc.pojo.vo.GocAuthUserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LoginUserHolder {
 
-    public static User getCurrentUser() {
+    public static GocAuthUserVO getCurrentUser() {
         // 从Header中获取用户信息
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert servletRequestAttributes != null;
@@ -22,10 +22,10 @@ public class LoginUserHolder {
             return null;
         }
         JSONObject userJsonObject = new JSONObject(userStr);
-        User user = new User();
-        user.setUsername(userJsonObject.getStr("user_name"));
-        user.setId(Convert.toLong(userJsonObject.get("id")));
-        user.setRoles(Convert.toList(String.class, userJsonObject.get(AuthConstant.AUTHORITY_CLAIM_NAME)));
-        return user;
+        GocAuthUserVO gocAuthUserVO = new GocAuthUserVO();
+        gocAuthUserVO.setUsername(userJsonObject.getStr("user_name"));
+        gocAuthUserVO.setId(Convert.toLong(userJsonObject.get("id")));
+        gocAuthUserVO.setRoles(Convert.toList(String.class, userJsonObject.get(AuthConstant.AUTHORITY_CLAIM_NAME)));
+        return gocAuthUserVO;
     }
 }

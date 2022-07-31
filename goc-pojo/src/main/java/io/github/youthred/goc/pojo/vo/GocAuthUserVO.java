@@ -1,4 +1,4 @@
-package io.github.youthred.goc.pojo.entity;
+package io.github.youthred.goc.pojo.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class User {
+public class GocAuthUserVO {
 
     private Long id;
     private String username;
