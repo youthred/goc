@@ -8,13 +8,12 @@ import io.github.youthred.goc.pojo.vo.GocAuthUserVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class GocAuthUserServiceImpl extends ServiceImpl<GocAuthUserMapper, GocAuthUser> implements IGocAuthUserService {
 
     @Override
-    public List<GocAuthUserVO> findUserVOS() {
-        return this.list().stream().map(GocAuthUserVO::new).collect(Collectors.toList());
+    public List<GocAuthUserVO> findUserVOTrees() {
+        return this.baseMapper.findUserVOTrees();
     }
 }

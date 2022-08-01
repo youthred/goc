@@ -19,24 +19,37 @@ public class GocAuthUserVO {
         this.id = u.getId();
         this.username = u.getUsername();
         this.password = u.getPassword();
-        this.enabled = Objects.nonNull(u.getEnabled()) && u.getEnabled().equals(1);
+        this.setEnabled(u.getEnabled());
     }
 
     private Long id;
     private String username;
     private String password;
-    private boolean enabled;
+    private Boolean enabled;
     private List<GocAuthRoleVO> roles = new ArrayList<>();
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = Objects.nonNull(enabled) && enabled.equals(1);
+    }
 
     public List<String> getRoleStrings() {
         return roles.stream().map(GocAuthRoleVO::getCode).collect(Collectors.toList());
     }
 
     public GocAuthUser toEntity() {
-        return new GocAuthUser()
+        GocAuthUser gocAuthUser = new GocAuthUser()
                 .setId(id)
                 .setUsername(username)
-                .setPassword(password)
-                .setEnabled(enabled ? 1 : 0);
+                .setPassword(password);
+        if (Objects.nonNull(enabled)) {
+            gocAuthUser.setEnabled(enabled ? 1 : 0);
+        } else {
+            gocAuthUser.setEnabled(0);
+        }
+        return gocAuthUser;
     }
 }

@@ -43,7 +43,7 @@ public class SecurityUser implements UserDetails {
         this.setId(gocAuthUserVO.getId());
         this.setUsername(gocAuthUserVO.getUsername());
         this.setPassword(gocAuthUserVO.getPassword());
-        this.setEnabled(gocAuthUserVO.isEnabled());
+        this.setEnabled(gocAuthUserVO.getEnabled());
         this.setAuthorities(gocAuthUserVO.getRoleStrings().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     }
 

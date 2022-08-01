@@ -14,10 +14,8 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +25,7 @@ public class UserServiceImpl implements UserDetailsService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final IGocAuthUserService iGocAuthUserService;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, RedisTemplate<String, Object> redisTemplate, IGocAuthUserService iGocAuthUserService) {
+    public UserServiceImpl(RedisTemplate<String, Object> redisTemplate, IGocAuthUserService iGocAuthUserService) {
         this.redisTemplate = redisTemplate;
         this.iGocAuthUserService = iGocAuthUserService;
         // 初始化存入Redis
@@ -36,12 +34,12 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<GocAuthUserVO> gocAuthUserVOS = new ArrayList<>();
+        List<GocAuthUserVO> gocAuthUserVOS;
         Object usersJsonStr = redisTemplate.opsForValue().get(RedisConstant.GOC_AUTH_USERS_JSON_STRING);
         if (Objects.nonNull(usersJsonStr)) {
             gocAuthUserVOS = JSONUtil.toList(usersJsonStr.toString(), GocAuthUserVO.class);
         } else {
-            gocAuthUserVOS = iGocAuthUserService.findUserVOS();
+            gocAuthUserVOS = iGocAuthUserService.findUserVOTrees();
         }
         GocAuthUserVO userVO = gocAuthUserVOS.stream().filter(item -> item.getUsername().equals(username)).findAny().orElse(null);
         if (Objects.isNull(userVO)) {
@@ -61,7 +59,7 @@ public class UserServiceImpl implements UserDetailsService {
     }
 
     private void cacheUsers() {
-        List<GocAuthUserVO> gocAuthUserVOS = iGocAuthUserService.findUserVOS();
+        List<GocAuthUserVO> gocAuthUserVOS = iGocAuthUserService.findUserVOTrees();
         redisTemplate.opsForValue().set(RedisConstant.GOC_AUTH_USERS_JSON_STRING, JSONUtil.toJsonStr(gocAuthUserVOS));
     }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface IGocAuthUserService extends IService<GocAuthUser> {
 
-    List<GocAuthUserVO> findUserVOS();
+    List<GocAuthUserVO> findUserVOTrees();
 }
