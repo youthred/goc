@@ -3,7 +3,7 @@ package io.github.youthred.goc.gateway.config.authenticator;
 import cn.hutool.core.convert.Convert;
 import io.github.youthred.goc.common.constant.AuthConstant;
 import io.github.youthred.goc.common.constant.RedisConstant;
-import io.github.youthred.goc.gateway.util.RedisUtil;
+import io.github.youthred.goc.common.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;

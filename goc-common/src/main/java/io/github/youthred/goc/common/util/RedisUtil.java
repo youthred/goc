@@ -1,4 +1,4 @@
-package io.github.youthred.goc.gateway.util;
+package io.github.youthred.goc.common.util;
 
 import org.apache.commons.lang3.StringUtils;
 
