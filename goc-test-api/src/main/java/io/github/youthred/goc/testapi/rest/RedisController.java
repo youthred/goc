@@ -27,7 +27,7 @@ public class RedisController {
         resourceRolesMap.put("/test-api/hello", CollUtil.toList("ADMIN"));
         resourceRolesMap.put("/test-api/user/currentUser", CollUtil.toList("ADMIN", "TEST"));
         resourceRolesMap.put("/role/*", CollUtil.toList("ADMIN"));
-        redisTemplate.opsForHash().putAll(RedisConstant.GOC_RESOURCE_ROLES_MAP + ":" + HttpMethod.GET.name(), resourceRolesMap);
-        redisTemplate.opsForHash().putAll(RedisConstant.GOC_RESOURCE_ROLES_MAP + ":" + HttpMethod.POST.name(), resourceRolesMap);
+        redisTemplate.opsForHash().putAll(RedisConstant.GOC_AUTH_RESOURCE_ROLES_MAP + ":" + HttpMethod.GET.name(), resourceRolesMap);
+        redisTemplate.opsForHash().putAll(RedisConstant.GOC_AUTH_RESOURCE_ROLES_MAP + ":" + HttpMethod.POST.name(), resourceRolesMap);
     }
 }

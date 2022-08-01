@@ -25,7 +25,6 @@ public class LoginUserHolder {
         GocAuthUserVO gocAuthUserVO = new GocAuthUserVO();
         gocAuthUserVO.setUsername(userJsonObject.getStr("user_name"));
         gocAuthUserVO.setId(Convert.toLong(userJsonObject.get("id")));
-        gocAuthUserVO.setRoles(Convert.toList(String.class, userJsonObject.get(AuthConstant.AUTHORITY_CLAIM_NAME)));
         return gocAuthUserVO;
     }
 }

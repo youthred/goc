@@ -10,6 +10,7 @@ spring:
       discovery:
         server-addr: ${ip-nacos:localhost}:${port-nacos:8848}
         namespace: goc
+        group: GOC_GROUP
       config:
         server-addr: ${ip-nacos:localhost}:${port-nacos:8848}
         namespace: goc
@@ -18,13 +19,3 @@ spring:
           - data-id: common.yml
             group: GOC_GROUP
             refresh: true
-  redis:
-    database: ${redis-database}
-    port: ${redis-port}
-    host: ${redis-host}
-    password: ${redis-password}
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"

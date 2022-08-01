@@ -10,6 +10,7 @@ spring:
       discovery:
         server-addr: ${ip-nacos:localhost}:${port-nacos:8848}
         namespace: goc
+        group: GOC_GROUP
       config:
         server-addr: ${ip-nacos:localhost}:${port-nacos:8848}
         namespace: goc

@@ -8,8 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Data
 @Accessors(chain = true)
@@ -43,11 +43,8 @@ public class SecurityUser implements UserDetails {
         this.setId(gocAuthUserVO.getId());
         this.setUsername(gocAuthUserVO.getUsername());
         this.setPassword(gocAuthUserVO.getPassword());
-        this.setEnabled(gocAuthUserVO.getEnabled());
-        if (gocAuthUserVO.getRoles() != null) {
-            authorities = new ArrayList<>();
-            gocAuthUserVO.getRoles().forEach(item -> authorities.add(new SimpleGrantedAuthority(item)));
-        }
+        this.setEnabled(gocAuthUserVO.isEnabled());
+        this.setAuthorities(gocAuthUserVO.getRoleStrings().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     }
 
     @Override

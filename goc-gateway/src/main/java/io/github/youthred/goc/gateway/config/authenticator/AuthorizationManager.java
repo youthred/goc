@@ -48,7 +48,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
         URI uri = request.getURI();
         List<String> authorities = new ArrayList<>();
-        String key = RedisUtil.keyChain(RedisConstant.GOC_RESOURCE_ROLES_MAP, request.getMethodValue());
+        String key = RedisUtil.keyChain(RedisConstant.GOC_AUTH_RESOURCE_ROLES_MAP, request.getMethodValue());
         Map<Object, Object> entries = redisTemplate.opsForHash().entries(key);
         for (Map.Entry<Object, Object> pathRole : entries.entrySet()) {
             if (ANT_PATH_MATCHER.match(pathRole.getKey().toString(), uri.getPath())) {

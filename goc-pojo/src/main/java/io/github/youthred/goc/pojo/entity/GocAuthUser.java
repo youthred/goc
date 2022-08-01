@@ -26,19 +26,11 @@ public class GocAuthUser implements Serializable {
     private Long id;
 
     @TableField("username")
-    private Long username;
+    private String username;
 
     @TableField("password")
     private String password;
 
     @TableField("enabled")
     private Integer enabled;
-
-    public boolean getEnabled() {
-        return Objects.nonNull(enabled) && enabled.equals(1);
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled ? 1 : 0;
-    }
 }
