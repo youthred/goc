@@ -14,5 +14,5 @@ public class GocAuthRoleVO {
     private String code;
     private String name;
     private String desc;
-    private List<GocAuthResourceVO> resources = new ArrayList<>();
+    private List<GocAuthPermissionVO> permissions = new ArrayList<>();
 }

@@ -16,8 +16,8 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@TableName("t_goc_auth_resource")
-public class GocAuthResource implements Serializable {
+@TableName("t_goc_auth_permission")
+public class GocAuthPermission implements Serializable {
 
     private static final long serialVersionUID = -1925857422787099642L;
 

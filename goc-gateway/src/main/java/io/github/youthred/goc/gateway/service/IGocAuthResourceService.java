@@ -1,15 +1,15 @@
 package io.github.youthred.goc.gateway.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.github.youthred.goc.pojo.entity.GocAuthResource;
-import io.github.youthred.goc.pojo.vo.GocAuthResourceVO;
+import io.github.youthred.goc.pojo.entity.GocAuthPermission;
+import io.github.youthred.goc.pojo.vo.GocAuthPermissionVO;
 
 import java.util.List;
 import java.util.Map;
 
-public interface IGocAuthResourceService extends IService<GocAuthResource> {
+public interface IGocAuthResourceService extends IService<GocAuthPermission> {
 
-    List<GocAuthResourceVO> listResourceVOS();
+    List<GocAuthPermissionVO> listResourceVOS();
 
     /**
      * Redis Resources

@@ -1,6 +1,6 @@
 package io.github.youthred.goc.pojo.vo;
 
-import io.github.youthred.goc.pojo.entity.GocAuthResource;
+import io.github.youthred.goc.pojo.entity.GocAuthPermission;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -11,13 +11,13 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class GocAuthResourceVO {
+public class GocAuthPermissionVO {
 
-    public GocAuthResourceVO(GocAuthResource r) {
-        this.id = r.getId();
-        this.parentId = r.getParentId();
-        this.path = r.getPath();
-        this.method = r.getMethod();
+    public GocAuthPermissionVO(GocAuthPermission p) {
+        this.id = p.getId();
+        this.parentId = p.getParentId();
+        this.path = p.getPath();
+        this.method = p.getMethod();
     }
 
     private Long id;

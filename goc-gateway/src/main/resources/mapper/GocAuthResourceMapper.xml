@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.github.youthred.goc.gateway.mapper.GocAuthResourceMapper">
 
-    <resultMap id="listResourceVOSMap" type="io.github.youthred.goc.pojo.vo.GocAuthResourceVO" autoMapping="true">
+    <resultMap id="listResourceVOSMap" type="io.github.youthred.goc.pojo.vo.GocAuthPermissionVO" autoMapping="true">
         <id column="method_path" property="methodPath"/>
         <collection property="roleStrings" ofType="java.lang.String">
             <constructor>
@@ -16,9 +16,9 @@
             s.parent_id,
             CONCAT_WS(':', s.method, s.path) as method_path,
             r.code
-        from t_goc_auth_resource s
-        left join t_goc_auth_role_resource rs on s.id = rs.resource_id
-        left join t_goc_auth_role r on r.id = rs.role_id
+        from t_goc_auth_permission s
+        left join t_goc_auth_role_permission rp on s.id = rp.permission_id
+        left join t_goc_auth_role r on r.id = rp.role_id
     </select>
 
 </mapper>

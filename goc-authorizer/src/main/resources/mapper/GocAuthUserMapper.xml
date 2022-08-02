@@ -12,9 +12,9 @@
             <result column="r_code" property="code"/>
             <result column="r_name" property="name"/>
             <result column="r_desc" property="desc"/>
-            <collection property="resources" javaType="io.github.youthred.goc.pojo.vo.GocAuthResourceVO">
-                <id column="s_id" property="id"/>
-                <result column="s_p_id" property="parentId"/>
+            <collection property="permissions" javaType="io.github.youthred.goc.pojo.vo.GocAuthPermissionVO">
+                <id column="p_id" property="id"/>
+                <result column="p_p_id" property="parentId"/>
                 <result column="path" property="path"/>
                 <result column="method" property="method"/>
             </collection>
@@ -30,15 +30,15 @@
             r.code as 'r_code',
             r.name as 'r_name',
             r.desc as 'r_desc',
-            s.id as s_id,
-            s.parent_id as s_p_id,
-            s.path,
-            s.method
+            p.id as p_id,
+            p.parent_id as p_p_id,
+            p.path,
+            p.method
         from t_goc_auth_user u
         left join t_goc_auth_user_role ur on u.id = ur.user_id
         left join t_goc_auth_role r on r.id = ur.role_id
-        left join t_goc_auth_role_resource rs on r.id = rs.role_id
-        left join t_goc_auth_resource s on s.id = rs.resource_id
+        left join t_goc_auth_role_permission rp on r.id = rp.role_id
+        left join t_goc_auth_permission p on p.id = rp.permission_id
     </select>
 
 </mapper>
