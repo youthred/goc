@@ -37,8 +37,8 @@
         from t_goc_auth_user u
         left join t_goc_auth_user_role ur on u.id = ur.user_id
         left join t_goc_auth_role r on r.id = ur.role_id
-        left join t_goc_auth_role_resource rr on r.id = rr.role_id
-        left join t_goc_auth_resource s on s.id = rr.resource_id
+        left join t_goc_auth_role_resource rs on r.id = rs.role_id
+        left join t_goc_auth_resource s on s.id = rs.resource_id
     </select>
 
 </mapper>

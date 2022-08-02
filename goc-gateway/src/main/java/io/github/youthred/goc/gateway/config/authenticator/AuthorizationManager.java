@@ -4,7 +4,7 @@ import cn.hutool.core.convert.Convert;
 import io.github.youthred.goc.common.constant.AuthConstant;
 import io.github.youthred.goc.common.constant.RedisConstant;
 import io.github.youthred.goc.common.util.RedisUtil;
-import lombok.RequiredArgsConstructor;
+import io.github.youthred.goc.gateway.service.IGocAuthResourceService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -29,12 +29,24 @@ import java.util.stream.Collectors;
  * @author https://github.com/youthred
  */
 @Component
-@RequiredArgsConstructor
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
     private static final PathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     private final RedisTemplate<String, Object> redisTemplate;
+    private final IGocAuthResourceService iGocAuthResourceService;
+
+    public AuthorizationManager(RedisTemplate<String, Object> redisTemplate, IGocAuthResourceService iGocAuthResourceService) {
+        this.redisTemplate = redisTemplate;
+        this.iGocAuthResourceService = iGocAuthResourceService;
+        // 初始化资源数据存入Redis
+        cacheResources();
+    }
+
+    private void cacheResources() {
+        Map<String, Map<String, List<String>>> methodPathRolesMap = iGocAuthResourceService.listResourcesForRedis();
+        methodPathRolesMap.forEach((method, pathRoles) -> redisTemplate.opsForHash().putAll(RedisUtil.keyChain(RedisConstant.GOC_AUTH_RESOURCE_ROLES_MAP, method), pathRoles));
+    }
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {

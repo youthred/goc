@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserDetailsService {
     public UserServiceImpl(RedisTemplate<String, Object> redisTemplate, IGocAuthUserService iGocAuthUserService) {
         this.redisTemplate = redisTemplate;
         this.iGocAuthUserService = iGocAuthUserService;
-        // 初始化存入Redis
+        // 初始化用户数据存入Redis
         cacheUsers();
     }
 
