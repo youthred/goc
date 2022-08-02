@@ -4,8 +4,5 @@
 
 - [x] Authorizer
 - [x] Gateway + Authenticator
-
-todo
-
-- Redis缓存认证数据
-- 图形化管理界面
+- [x] Redis缓存认证数据
+- [ ] 图形化管理界面
