@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserDetailsService {
         this.redisTemplate = redisTemplate;
         this.iGocAuthUserService = iGocAuthUserService;
         // 初始化用户数据存入Redis
-        cacheUsers();
+        cacheUsers(iGocAuthUserService.findUserVOTrees());
     }
 
     @Override
@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserDetailsService {
             gocAuthUserVOS = JSONUtil.toList(usersJsonStr.toString(), GocAuthUserVO.class);
         } else {
             gocAuthUserVOS = iGocAuthUserService.findUserVOTrees();
+            cacheUsers(gocAuthUserVOS);
         }
         GocAuthUserVO userVO = gocAuthUserVOS.stream().filter(item -> item.getUsername().equals(username)).findAny().orElse(null);
         if (Objects.isNull(userVO)) {
@@ -58,8 +59,7 @@ public class UserServiceImpl implements UserDetailsService {
         return securityUser;
     }
 
-    private void cacheUsers() {
-        List<GocAuthUserVO> gocAuthUserVOS = iGocAuthUserService.findUserVOTrees();
+    private void cacheUsers(List<GocAuthUserVO> gocAuthUserVOS) {
         redisTemplate.opsForValue().set(RedisConstant.GOC_AUTH_USERS_JSON_STRING, JSONUtil.toJsonStr(gocAuthUserVOS));
     }
 }

@@ -6,7 +6,7 @@ import io.github.youthred.goc.pojo.vo.GocAuthPermissionVO;
 
 import java.util.List;
 
-public interface GocAuthResourceMapper extends BaseMapper<GocAuthPermission> {
+public interface GocAuthPermissionMapper extends BaseMapper<GocAuthPermission> {
 
-    List<GocAuthPermissionVO> listResourceVOS();
+    List<GocAuthPermissionVO> listPermissions();
 }

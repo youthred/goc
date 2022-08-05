@@ -7,15 +7,15 @@ import io.github.youthred.goc.pojo.vo.GocAuthPermissionVO;
 import java.util.List;
 import java.util.Map;
 
-public interface IGocAuthResourceService extends IService<GocAuthPermission> {
+public interface IGocAuthPermissionService extends IService<GocAuthPermission> {
 
-    List<GocAuthPermissionVO> listResourceVOS();
+    List<GocAuthPermissionVO> listPermissions();
 
     /**
-     * Redis Resources
+     * Redis Permissions
      * Map<String, Map<String, List<String>>>
      * ----Method------Path---------Roles----
      * @return map
      */
-    Map<String, Map<String, List<String>>> listResourcesForRedis();
+    Map<String, Map<String, List<String>>> listPermissionsForRedis();
 }

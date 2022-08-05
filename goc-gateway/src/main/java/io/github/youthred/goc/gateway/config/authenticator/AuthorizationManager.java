@@ -4,7 +4,8 @@ import cn.hutool.core.convert.Convert;
 import io.github.youthred.goc.common.constant.AuthConstant;
 import io.github.youthred.goc.common.constant.RedisConstant;
 import io.github.youthred.goc.common.util.RedisUtil;
-import io.github.youthred.goc.gateway.service.IGocAuthResourceService;
+import io.github.youthred.goc.gateway.service.IGocAuthPermissionService;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -34,18 +35,17 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
     private static final PathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     private final RedisTemplate<String, Object> redisTemplate;
-    private final IGocAuthResourceService iGocAuthResourceService;
+    private final IGocAuthPermissionService iGocAuthPermissionService;
 
-    public AuthorizationManager(RedisTemplate<String, Object> redisTemplate, IGocAuthResourceService iGocAuthResourceService) {
+    public AuthorizationManager(RedisTemplate<String, Object> redisTemplate, IGocAuthPermissionService iGocAuthPermissionService) {
         this.redisTemplate = redisTemplate;
-        this.iGocAuthResourceService = iGocAuthResourceService;
+        this.iGocAuthPermissionService = iGocAuthPermissionService;
         // 初始化资源数据存入Redis
-        cacheResources();
+        cachePermissions(iGocAuthPermissionService.listPermissionsForRedis());
     }
 
-    private void cacheResources() {
-        Map<String, Map<String, List<String>>> methodPathRolesMap = iGocAuthResourceService.listResourcesForRedis();
-        methodPathRolesMap.forEach((method, pathRoles) -> redisTemplate.opsForHash().putAll(RedisUtil.keyChain(RedisConstant.GOC_AUTH_RESOURCE_ROLES_MAP, method), pathRoles));
+    private void cachePermissions(Map<String, Map<String, List<String>>> methodPathRolesMap) {
+        methodPathRolesMap.forEach((method, pathRoles) -> redisTemplate.opsForHash().putAll(RedisUtil.keyChain(RedisConstant.GOC_AUTH_PERMISSION_MAP, method), pathRoles));
     }
 
     @Override
@@ -59,13 +59,22 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
          */
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
         URI uri = request.getURI();
+        String methodValue = request.getMethodValue();
         List<String> authorities = new ArrayList<>();
-        String key = RedisUtil.keyChain(RedisConstant.GOC_AUTH_RESOURCE_ROLES_MAP, request.getMethodValue());
-        Map<Object, Object> entries = redisTemplate.opsForHash().entries(key);
-        for (Map.Entry<Object, Object> pathRole : entries.entrySet()) {
-            if (ANT_PATH_MATCHER.match(pathRole.getKey().toString(), uri.getPath())) {
-                List<String> roles = Convert.toList(String.class, pathRole.getValue());
-                authorities = roles.stream().map(i -> AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
+        String key = RedisUtil.keyChain(RedisConstant.GOC_AUTH_PERMISSION_MAP, methodValue);
+        Map<String, List<String>> entries = redisTemplate.opsForHash().entries(key).entrySet().stream().collect(Collectors.toMap(e -> e.getKey().toString(), e -> Convert.toList(String.class, e.getValue())));
+        if (MapUtils.isEmpty(entries)) {
+            Map<String, Map<String, List<String>>> permissionsForRedis = iGocAuthPermissionService.listPermissionsForRedis();
+            if (MapUtils.isNotEmpty(permissionsForRedis)) {
+                entries = permissionsForRedis.get(methodValue);
+            }
+            cachePermissions(permissionsForRedis);
+        }
+        if (MapUtils.isNotEmpty(entries)) {
+            for (Map.Entry<String, List<String>> pathRole : entries.entrySet()) {
+                if (ANT_PATH_MATCHER.match(pathRole.getKey(), uri.getPath())) {
+                    authorities = pathRole.getValue().stream().map(i -> AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
+                }
             }
         }
         // 认证通过且角色匹配的用户可访问当前路径
