@@ -27,4 +27,9 @@ public class KeyPairController {
         RSAKey key = new RSAKey.Builder(publicKey).build();
         return new JWKSet(key).toJSONObject();
     }
+
+    @GetMapping("/x")
+    public Object x() {
+        return "123";
+    }
 }
