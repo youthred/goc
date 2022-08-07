@@ -98,6 +98,13 @@ public class Res<T> {
         return new Res<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
+    /**
+     * 未授权返回结果
+     */
+    public static <T> Res<T> forbidden() {
+        return new Res<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), null);
+    }
+
     public long getCode() {
         return code;
     }
