@@ -1,18 +1,24 @@
-package io.github.youthred.goc.testapi.service;
+package io.github.youthred.goc.testapi.service.impl;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.json.JSONObject;
 import io.github.youthred.goc.common.constant.AuthConstant;
 import io.github.youthred.goc.pojo.vo.GocAuthUserVO;
+import io.github.youthred.goc.testapi.service.ILoginUserHolder;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class LoginUserHolder {
+@Service
+//@X
+public class LoginUserHolderImpl implements ILoginUserHolder {
 
-    public static GocAuthUserVO getCurrentUser() {
+//    @X
+    @Override
+    public GocAuthUserVO getCurrentUser() {
         // 从Header中获取用户信息
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert servletRequestAttributes != null;
