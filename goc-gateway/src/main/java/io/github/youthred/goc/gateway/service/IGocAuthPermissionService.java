@@ -15,6 +15,7 @@ public interface IGocAuthPermissionService extends IService<GocAuthPermission> {
      * Redis Permissions
      * Map<String, Map<String, List<String>>>
      * ----Method------Path---------Roles----
+     *
      * @return map
      */
     Map<String, Map<String, List<String>>> listPermissionsForRedis();
